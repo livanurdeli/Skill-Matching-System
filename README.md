@@ -35,6 +35,15 @@ $$Score = \left( \frac{\text{Kullanıcıda Bulunan Eşleşen Yetenekler}}{\text{
 
 ---
 
+## 📸 Uygulama Görselleri
+<p align="center">
+<img width="1389" height="900" alt="Ekran Resmi 2026-03-07 02 06 22" src="https://github.com/user-attachments/assets/9fe0d7f1-9f37-46ac-a569-fb51840d3dbe" />
+<img width="1389" height="900" alt="Ekran Resmi 2026-03-07 02 06 10" src="https://github.com/user-attachments/assets/fc55ac80-d543-458a-bb35-372b65590291" />
+<img width="1389" height="900" alt="Ekran Resmi 2026-03-07 02 05 37" src="https://github.com/user-attachments/assets/f066265e-2ec8-4f90-9727-ec373b49ed6f" />
+</p>
+
+---
+
 ## ⚙️ Kurulum (Yerel Çalıştırma)
 
 Projeyi kendi bilgisayarınızda çalıştırmak isterseniz:
