@@ -2,11 +2,6 @@
 
 Bu proje, iş arayanların sahip olduğu yetenekler ile iş ilanlarında aranan gereksinimleri analiz ederek, kullanıcıya en uygun işleri bir **uygunluk skoru (%)** ile sunan dinamik bir web uygulamasıdır. **Spring Boot** ekosistemi kullanılarak geliştirilen bu sistem, işe alım süreçlerini otomatize etmeyi hedefler.
 
-🔗 **Canlı Demo (Live Preview)**
-*Projenizi yayınladığınızda linki buraya ekleyebilirsiniz.*
-▶️ [Siteyi Görüntüle](#)
-
----
 
 ## 🚀 Proje İçeriği
 
@@ -46,4 +41,10 @@ Projeyi kendi bilgisayarınızda çalıştırmak isterseniz:
 
 1. **Repoyu Klonlayın:**
    ```bash
-   git clone [https://github.com/livanurdeli/skillmatch-system.git](https://github.com/livanurdeli/skillmatch-system.git)
+   git clone [https://github.com/livanurdeli/skillmatch-system.git](https://github.com/livanurdeli/skillmatch-system.git) ```
+   
+2. **Bağımlılıkları Yükleyin:**
+   ```bash
+   mvn clean install
+3. **Tarayıcıdan Erişin:**
+   URL: http://localhost:8080/login
