@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillMatch - Kayıt Ol</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex;
+               justify-content: center; align-items: center;
+               min-height: 100vh; background: #f0f2f5; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 420px; }
+        h2 { text-align: center; color: #333; margin-bottom: 24px; }
+        input { width: 100%; padding: 10px; margin: 8px 0;
+                border: 1px solid #ddd; border-radius: 6px;
+                box-sizing: border-box; }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr;
+                       gap: 8px; margin: 12px 0; }
+        .skill-item { display: flex; align-items: center; gap: 6px;
+                      padding: 8px; border: 1px solid #ddd;
+                      border-radius: 6px; cursor: pointer; }
+        .skill-item:hover { background: #f0f0ff; border-color: #4f46e5; }
+        button { width: 100%; padding: 12px; background: #4f46e5;
+                 color: white; border: none; border-radius: 6px;
+                 cursor: pointer; font-size: 16px; margin-top: 8px; }
+        button:hover { background: #4338ca; }
+        .error { color: red; text-align: center; margin-bottom: 12px; }
+        .link { text-align: center; margin-top: 16px; }
+        a { color: #4f46e5; text-decoration: none; }
+        label { font-weight: bold; display: block;
+                margin-top: 16px; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>🎯 SkillMatch - Kayıt Ol</h2>
+    <p th:if="${error}" th:text="${error}" class="error"></p>
+    <form method="post" th:action="@{/register}">
+        <input type="text" name="name" placeholder="Ad Soyad" required/>
+        <input type="email" name="email" placeholder="Email" required/>
+        <input type="password" name="password" placeholder="Şifre" required/>
+
+        <label>Yeteneklerini seç:</label>
+        <div class="skills-grid">
+            <div class="skill-item" th:each="skill : ${skills}">
+                <input type="checkbox" name="skillIds"
+                       th:value="${skill.id}"
+                       th:id="${'skill-' + skill.id}"/>
+                <span th:text="${skill.name}"></span>
+            </div>
+        </div>
+
+        <button type="submit">Kayıt Ol</button>
+    </form>
+    <div class="link">
+        Hesabın var mı? <a th:href="@{/login}">Giriş Yap</a>
+    </div>
+</div>
+</body>
+</html>

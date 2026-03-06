@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillMatch - İş İlanları</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+
+        .navbar { background: #4f46e5; padding: 16px 32px;
+                  display: flex; justify-content: space-between;
+                  align-items: center; }
+        .navbar h1 { color: white; font-size: 22px; }
+        .navbar span { color: #c7d2fe; }
+        .navbar a { color: white; text-decoration: none;
+                    background: rgba(255,255,255,0.2);
+                    padding: 8px 16px; border-radius: 6px; }
+
+        .container { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+
+        .user-skills { background: white; padding: 20px;
+                       border-radius: 10px; margin-bottom: 24px;
+                       box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .user-skills h3 { color: #333; margin-bottom: 12px; }
+        .skill-tag { display: inline-block; background: #e0e7ff;
+                     color: #4f46e5; padding: 4px 12px;
+                     border-radius: 20px; font-size: 13px; margin: 4px; }
+
+        .job-card { background: white; padding: 24px;
+                    border-radius: 10px; margin-bottom: 16px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                    border-left: 4px solid #e5e7eb; }
+        .job-card.high   { border-left-color: #22c55e; }
+        .job-card.medium { border-left-color: #f59e0b; }
+        .job-card.low    { border-left-color: #ef4444; }
+
+        .job-header { display: flex; justify-content: space-between;
+                      align-items: flex-start; margin-bottom: 8px; }
+        .job-title { font-size: 18px; font-weight: bold; color: #1f2937; }
+        .job-company { color: #6b7280; font-size: 14px; margin-bottom: 12px; }
+        .job-desc { color: #4b5563; font-size: 14px;
+                    margin-bottom: 12px; line-height: 1.5; }
+
+        .match-badge { padding: 6px 14px; border-radius: 20px;
+                       font-weight: bold; font-size: 14px;
+                       white-space: nowrap; }
+        .match-high   { background: #dcfce7; color: #16a34a; }
+        .match-medium { background: #fef9c3; color: #ca8a04; }
+        .match-low    { background: #fee2e2; color: #dc2626; }
+
+        .required-skills { margin-top: 8px; }
+        .required-skills span { font-size: 13px; color: #6b7280; }
+        .req-skill { display: inline-block; padding: 3px 10px;
+                     border-radius: 20px; font-size: 12px; margin: 3px;
+                     border: 1px solid #e5e7eb; }
+        .req-skill.matched { background: #dcfce7; color: #16a34a;
+                             border-color: #86efac; }
+        .req-skill.missing { background: #fee2e2; color: #dc2626;
+                             border-color: #fca5a5; }
+
+        .no-jobs { text-align: center; color: #6b7280;
+                   padding: 48px; background: white;
+                   border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>🎯 SkillMatch</h1>
+    <span>Merhaba, <strong th:text="${user.name}"></strong></span>
+    <a th:href="@{/logout}">Çıkış Yap</a>
+</div>
+
+<div class="container">
+
+    <!-- Kullanıcı Yetenekleri -->
+    <div class="user-skills">
+        <h3>🛠 Yeteneklerim</h3>
+        <div th:if="${user.skills.isEmpty()}">
+            <p style="color:#999">Henüz yetenek eklemediniz.</p>
+        </div>
+        <div th:each="skill : ${user.skills}">
+            <span class="skill-tag" th:text="${skill.name}"></span>
+        </div>
+    </div>
+
+    <!-- İş İlanları -->
+    <h2 style="margin-bottom:16px; color:#1f2937">📋 İş İlanları</h2>
+
+    <div th:if="${jobMatchMap.isEmpty()}" class="no-jobs">
+        <p>Henüz iş ilanı bulunmuyor.</p>
+    </div>
+
+    <div th:each="entry : ${jobMatchMap}"
+         th:with="job=${entry.key}, score=${entry.value}"
+         th:classappend="${score >= 70 ? 'high' : (score >= 40 ? 'medium' : 'low')}"
+         class="job-card">
+
+        <div class="job-header">
+            <div>
+                <div class="job-title" th:text="${job.title}"></div>
+                <div class="job-company"
+                     th:text="${job.company} + ' • ' + ${job.location}"></div>
+            </div>
+            <span class="match-badge"
+                  th:classappend="${score >= 70 ? 'match-high' : (score >= 40 ? 'match-medium' : 'match-low')}"
+                  th:text="${score} + '% Uygunluk'"></span>
+        </div>
+
+        <div class="job-desc" th:text="${job.description}"></div>
+
+        <div class="required-skills">
+            <span>Aranan Yetenekler: </span>
+            <th:block th:each="skill : ${job.requiredSkills}"
+                      th:with="hasSkill=${user.skills.contains(skill)}">
+                <span class="req-skill"
+                      th:classappend="${hasSkill ? 'matched' : 'missing'}"
+                      th:text="${skill.name}"></span>
+            </th:block>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
